@@ -1,0 +1,42 @@
+\chapter{Introduzione}
+\section{Contesto e Motivazione}
+I primi personal computer necessitavano di una conoscenza specifica del modo di interagire con il sistema operativo. 
+Erano molto specifici nei loro utilizzi e offrivano una interfaccia a linea di comando non neccessariamente user-friendly. 
+Fortunatamente lo sviluppo di nuove tecnologie e la popolarità dei computer hanno spinto l'industria ad abbassare il livello di expertise necessario.
+I sistemi operativi moderni consentono all'utente di interagire attraverso diverse modalità permettendo a diversi tipi di utente di approcciarsi come meglio credono.
+Nonostante Windows sia il sistema operativo più diffuso in ambiente desktop, il suo assistente vocale, Cortana, offre un insieme ridotto di funzionalità, soprattutto se confrontanto con prodotti simili disponibili in altri sistemi operativi.
+Assistenti vocali come Google Assistant per Android, e Siri per iOS permettono di controllare impostazioni del dispositivo su cui si trovano, rispondono alle domande dell'utente, e permettono di avviare attività. Tali funzionalità non sono presenti in Cortana.
+
+\section{Obiettivi}
+L'obiettivo di questo lavoro di tesi è appunto l'implementazione alcune di queste funzionalità mancanti. In particolare, attraverso l'assistente, l'utente potrà eseguire i seguenti comandi:
+
+\begin{itemize}
+    \item Avvio di programmi installati
+    \item Chiusura di programmi in esecuzione
+    \item Controllo del volume del dispositivo
+    \item Controllo della riproduzione di file multimediali
+    \item Esecuzione di routine create dall'utente tramite python
+\end{itemize}
+
+\section{Contributo principale}
+Più precisamente, il client permette di eseguire azioni automaticamente impartendo remotamente comandi attraverso un altro dispositivo.
+Questo è possibile grazie all'implementazione di una "Azione per Google Assistant" in grado di convertire voce o testo in un comando comprensibile dal client in esecuzione sul dispositivo che si vuole controllare.
+È stato scelto questo approccio remoto per permettere all'utente di controllare il dispositivo anche senza avere accesso fisico al dispositivo.
+\subsubsection{Struttura del lavoro di tesi}
+La presentazione di questo lavoro di tesi è strutturata nel seguente modo:
+
+Il Capitolo 2 mostra le principali tecnologie utilizzate con un esempio generico di utilizzo, introducendo i principali concetti di programmazione legati ad essi.
+
+Il Capitolo 3 contiene una panoramica generale dell'assistente comprensivo di struttura del progetto, principali implementazioni, ed eventuali problemi riscontrati durante lo sviluppo.
+
+Il Capitolo 4 espone alcune possibili soluzioni a dei problemi esposti nel capitolo precedente.
+
+Il Capitolo 5 conclude l'esposizione introducendo alcuni suggerimenti e possibili miglioramenti.
+
+\section{Problemi tecnici riscontrati}
+\label{sec:problematecnico}
+Il progetto utilizza Google Assistant, attualmente disponibile solo su dispositivi Android, questo significa che non è stato possibile implementare una soluzione nativa a Windows. 
+A causa di questa limitazione è stato necessario implementare un client nativo che si collega ad un back-end esterno, in questo caso, Firebase. 
+Grazie Firebase però, è stato possibile semplificare l'architettura del sistema visto che è una piattaforma di Backend-As-a-Service molto in voga. 
+Grazie a Firebase è stato possibile utilizzare un sistema di autenticazione e un database già implementati e testati da esperti del settore, il che allegerisce il carico di molto. 
+Inoltre, per alcune funzionalità implementate è stato necessario utilizzare alcune API Windows tramite python poichè non esistono in Javascript, il che porta dunque ad una ulteriore dipendenza per il corretto funzionamento del software. 

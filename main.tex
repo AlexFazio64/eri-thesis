@@ -1,0 +1,128 @@
+\documentclass[a4paper,12pt,oneside]{book}
+\linespread{1.5}
+\usepackage{geometry}
+\geometry{top=3cm,bottom=3cm,left=3.5cm,right=3.5cm}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz,pgf}
+\usepackage{indentfirst}
+\usepackage{amsfonts}
+\usepackage[italian]{babel}
+
+\usepackage{listings}
+\usepackage{todonotes}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\setlength{\parindent}{1cm}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{numprint}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{tocbibind}
+\usepackage{url}
+
+\graphicspath{{images/}}
+
+\setlength {\marginparwidth }{2cm} 
+\pgfplotsset{compat=1.16}
+
+\newenvironment{dedication}
+  {\clearpage               % we want a new page
+   \thispagestyle{empty}    % no header and footer
+   \vspace*{\stretch{1}}    % some space at the top 
+   \itshape                 % the text is in italics
+   \raggedleft              % flush to the right margin
+  }
+   {\par % end the paragraph
+   \vspace{\stretch{3}} % space at bottom is three times that at the top
+   \clearpage           % finish off the page
+  }
+  
+\begin{document}
+%% Frontespizio %%
+\begin{titlepage}
+    \begin{center}
+        \LARGE{\uppercase{\textbf{Università della Calabria}}}\\
+        \vspace{5mm}
+%% Dipartimento %%
+    	\uppercase{\normalsize Dipartimento di Matematica e Informatica}\\
+    \end{center}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{images/logo.png}
+    \end{figure}
+    
+    \begin{center}
+%% Corso di Laurea %%
+    	\large{ Corso di Laurea in Informatica}\\
+    	\vspace{7mm}
+%% Titolo della Tesi %%
+        {\LARGE{\bf ERI Computer Assistant}}\\
+    	\vspace{3mm}
+    \end{center}
+     
+    \vspace{15mm}
+    \noindent
+    \begin{minipage}[t]{0.50\textwidth}
+%% Relatore %%
+    	{\large{ Relatore:\\\bf Prof. Mario Alviano\\}}
+    	\vspace{12mm}
+
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.4\textwidth}\raggedleft
+%% Candidato %%
+    	{\large{Candidato: \\ \bf Alessandro Fazio\\ Mat. 200771}}
+    \end{minipage}
+    
+    \vspace{20mm}
+    
+%% Anno Accademico %%
+    \centering{\large \uppercase{ Anno Accademico 2020/2021}}
+
+\end{titlepage}
+
+% \begin{dedication}
+%     "Because of the uproar over 2B’s butt,
+
+%     there are loads of rude drawings and whatnot being uploaded [online]. 
+    
+%     And since going around and collecting them is a pain, 
+    
+%     I’d like it if I could get them sent in a zip file every week."
+
+%     (Yoko Taro)
+    
+    
+%     "Ulle Tulle"
+
+%     (Antonio Norman Russo)
+% \end{dedication}
+
+%% Corpo della tesi %%
+
+\chapter*{Sommario} %% In questa zona inseriamo l'abstract del nostro documento. %%
+In questo lavoro di tesi è stato progettato e implementato un software che permette all'utente di interagire con il proprio sistema operativo Windows impartendo comandi vocali o testuali remotamente attraverso dispositivi compatibili con Google Assistant. 
+Tale software si pone l'obiettivo di permette all'utente di controllare l'avvio e la chiusura di alcuni programmi di uso comune e di gestire il volume e la riproduzione di file multimediali. 
+È stata inoltre resa possibile l'estensione delle funzionalità dell'assistente virtuale attraverso l'esecuzione di script python personali, incrementando così i potenziali utilizzi creando una esperienza personalizzabile e specifica. 
+
+%\tableofcontents
+%\listoffigures
+\input{capitoli/capitolo1} % rivedere
+\input{capitoli/capitolo2}
+%\input{capitoli/capitolo3}
+%\input{capitoli/capitolo4}
+%\input{capitoli/capitolo5}
+
+%\bibliographystyle{plain}
+%\nocite{*}
+%\bibliography{bibliografia.bib}
+
+%Eliminare/Aggiungere/Personalizzare i capitolo nella cartella "capitoli"
+
+%\chapter*{Conclusioni} In questo modo non comparirà dell'indice
+
+
+\end{document}
