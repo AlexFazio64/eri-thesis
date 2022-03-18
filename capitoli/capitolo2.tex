@@ -7,8 +7,8 @@ In questo capitolo verranno descritte le tecnologie utilizzate nella realizzazio
 \subsection{HTML}
 HTML, o HyperText Markup Language, è un linguaggio che permette di creare pagine web definendone la struttura, la quale verrà successivamente interpretata dal browser, principale strumento per la fruizione di pagine web.
 Una pagina HTML è composta da elementi creati attraverso i cosiddetti tag html.
-La struttura base di una pagina HTML è formata da 1 tag principale chiamato $<html>$ che conterrà al suo interno altri 2 tag fondamentali, $<head>$ e $<body>$.
-Nel tag $<head>$ si inseriranno informazioni utili al browser, mentre nel $<body>$ andremo ad inserire tutto quello che l'utente andrà a vedere e con il quale potrà interagire.
+La struttura base di una pagina HTML è formata da un tag principale chiamato \lstinline{<html>} che conterrà al suo interno altri due tag fondamentali, \lstinline{<head>} e \lstinline{<body>}.
+Nel tag \lstinline{<head>} si inseriranno informazioni utili al browser, mentre nel \lstinline{<body>} andremo ad inserire tutto quello che l'utente andrà a vedere e con il quale potrà interagire.
 Vediamo un esempio:
 \begin{figure}[H]
     \centering
@@ -25,7 +25,7 @@ Vediamo un esempio:
 HTML rende possibile la creazione di una pagina interattiva basilare, e grazie a linguaggi di supporto quali CSS e Javascript è possibile stilizzare il contenuto ed eventualmente cambiare il comportamento standard degli elementi.
 \subsection{CSS}
 CSS, acronimo di Cascading StyleSheets permette di personalizzare il modo in cui il browser mostra il contenuto della pagina HTML al quale viene applicato.
-Vengono introdotti nuovi costrutti che permettono allo sviluppatore di applicare lo stile selettivamente. 
+Vengono introdotti nuovi costrutti che permettono allo sviluppatore di applicare lo stile selettivamente.
 Tra i costrutti abbiamo le regole, le proprietà e i selettori, che congiuntamente rendono possibile specificare uno stile diverso da quello di default per l'elemento selezionato. Vediamo un esempio:
 \begin{verbatim}
     p {
@@ -36,7 +36,7 @@ Tra i costrutti abbiamo le regole, le proprietà e i selettori, che congiuntamen
 \end{verbatim}
 In questo spezzone di codice è rappresentata una regola.
 \begin{itemize}
-    \item p è un selettore che identifica ogni tag $<p>$ indistintamente
+    \item p è un selettore che identifica ogni tag \lstinline{<p>} indistintamente
     \item color e font-size delle proprietà
     \item red, 24pt e green sono valori
 \end{itemize}
@@ -50,7 +50,7 @@ Grazie ad esso è possibile rendere dinamiche le pagine web reagendo alle azioni
 Rende possibile modificare il comportamento standard degli elementi interattivi nelle pagine.
 E' un linguaggio basato su multipli paradigmi, interpretato, debolmente tipizzato.
 Tutti i browser moderni permettono alle pagine web di eseguire codice Javascript in un ambiente isolato, ovvero, ogni pagina può eseguire il proprio codice ma senza accedere al codice di altre pagine.
-Esistono vari modi di includere codice Javascript all'interno di pagine html, ma il più comune è quello di importare il file .js all'interno di un tag $<script>$.
+Esistono vari modi di includere codice Javascript all'interno di pagine html, ma il più comune è quello di importare il file .js all'interno di un tag \lstinline{<script>}.
 \subsection{Typescript}
 Typescript è una versione tipizzata di Javascript, come suggerisce il nome.
 Segue tutte le regole dello standard Javascript, ma rende più semplice l'implementazione e il debugging del codice da parte dello sviluppatore grazie a strumenti integrati negli ambienti di sviluppo.
@@ -79,16 +79,16 @@ Permette allo sviluppatore di scrivere meno codice rispetto all'approccio tradiz
 Svelte è basato su un approccio a componenti riutilizzabili. La struttura tipica di un componente è la seguente:
 
 \begin{itemize}
-    \item un tag $<script>$ locale al componente, all'interno del quale possiamo specificare la logica
-    \item un tag $<style>$ dove possiamo personalizzare il modo in cui esso viene renderizzato dal browser
+    \item un tag \lstinline{<script>} locale al componente, all'interno del quale possiamo specificare la logica
+    \item un tag \lstinline{<style>} dove possiamo personalizzare il modo in cui esso viene renderizzato dal browser
     \item una sezione in cui possiamo includere i tag standard di HTML
 \end{itemize}
 
-Il principale vantaggio di utilizzare SvelteKit è, come già accennato, il binding tra logica e grafica, e il supporto nativo a Typescript. 
-In aggiunta a tali funzionalità, SvelteKit fornisce la possibilità di gestire il routing dinamicamente, ovvero la navigazione tra diverse pagine. 
+Il principale vantaggio di utilizzare SvelteKit è, come già accennato, il binding tra logica e grafica, e il supporto nativo a Typescript.
+In aggiunta a tali funzionalità, SvelteKit fornisce la possibilità di gestire il routing dinamicamente, ovvero la navigazione tra diverse pagine.
 Con SvelteKit è possibile creare SinglePageApplications (SPAs) molto facilmente, il che da all'utente una esperienza coesa e lineare senza cambi di schermate troppo bruschi.
 \subsection{Frameworks}
-Tradizionalmente per cambiare il comportamento di un bottone sono necessari 3 file diversi, un file .html dove definiamo la struttura della pagina, un file .js nel quale andiamo a selezionare il bottone in maniera molto verbosa, e un file .css dove personalizziamo lo stile di tale bottone.
+Tradizionalmente per cambiare il comportamento di un bottone sono necessari tre file diversi, un file .html dove definiamo la struttura della pagina, un file .js nel quale andiamo a selezionare il bottone in maniera molto verbosa, e un file .css dove personalizziamo lo stile di tale bottone.
 Con Svelte basta un solo file .svelte che verrà successivamente compilato in diversi file a seconda delle funzionalità implementate.
 Esistono altri strumenti, anche chiamati framework, simili a Svelte che permettono di sviluppare webapp facilitando il lavoro dello sviluppatore, per esempio:
 
@@ -100,7 +100,7 @@ Esistono altri strumenti, anche chiamati framework, simili a Svelte che permetto
 \end{itemize}
 
 Si è scelto di utilizzare Svelte per la realizzazione dell'interfaccia, per la quantità minimale di codice boilerplate necessaria rispetto ad altri framework, la leggibilità, le alte prestazioni e il supporto nativo a Typescript.
-Il seguente esempio è una semplice applicazione che sincronizza i valori di 2 $<input>$ sommandoli e stampandoli in un paragrafo separato.
+Il seguente esempio è una semplice applicazione che sincronizza i valori di due \lstinline{<input>} sommandoli e stampandoli in un paragrafo separato.
 
 \begin{figure}[H]
     \centering
@@ -137,13 +137,13 @@ Un esempio di pacchetto utilizzato all'interno di questo progetto è appunto Fir
 \section{Electron}
 Electron è un framework che permette lo sviluppo di interfacce grafiche basato sul motore di rendering di Chromium e con Node integrato.
 Permette allo sviluppatore di utilizzare le tecnologie web esistenti e di integrarle in una applicazione desktop nativa.
-Grazie a Electron è possibile interagire con il sistema operativo grazie a Node, tramite una interfaccia grafica sviluppata inizialmente per il web.
+Electron rende possibile interagire con il sistema operativo attraverso Node utilizzando una qualsiasi pagina web che fungerà da interfaccia grafica, in questo caso creata con SvelteKit.
 Il grande vantaggio di utilizzare Electron è che basta conoscere JavaScript per creare applicazioni desktop native invece di utilizzare librerie grafiche diverse integrate in altri linguaggi come C++ e C\#.
 
 \section{Express}
 Express è un framework per Node che permette di implementare delle applicazioni server.
 I web server, generalmente, non sono altro che applicazioni che ricevono richieste (o request) da utenti esterni, elaborano tali richieste secondo una logica, e rispondono inviando un messaggio, chiamato response.
-In questo progetto è stato implementato un webhook che espone 1 solo endpoint. 
+In questo progetto è stato implementato un webhook che espone un solo endpoint.
 La differenza principale tra webhook e web server è che il webhook non fornisce contenuto web nelle response.
 Tale webhook fornisce l'endpoint a Google Assistant in modo tale da poter interagire con il realtime database per permettere l'interattività tra l'assistente e il client desktop dell’utente.
 
@@ -153,7 +153,7 @@ I server devono rimanere continuamente in esecuzione per poter ricevere richiest
 Heroku fornisce le dyno, ovvero, delle macchina virtuali con sistema operativo Linux in grado di eseguire applicazioni Node.
 Le dyno offerte da Heroku sono in grado di essere messe in pausa e riprendere l'esecuzione quando esse ricevono una richiesta dall'esterno, in modo da essere più efficienti in termini di utilizzo abbassando il costo complessivo dell'infrastruttura.
 Nel caso specifico, viene utilizzato Heroku per permettere al server di essere contattato in ogni momento da Google Assistant.
-Questo servizio è offerto gratuitamente ma con delle limitazioni che per questo progetto sono accettabili.
+Il servizio di hosting delle dyno utilizzato nel progetto è offerto gratuitamente da Heroku, ma con delle limitazioni che per questo progetto sono accettabili.
 Una alternativa a Heroku sarebbe stata quella di utilizzare Firebase Cloud Functions, che non è disponibile nel piano gratuito.
 
 \section{Actions on Google}
@@ -168,9 +168,9 @@ Vediamo un esempio:
 \end{center}
 L'assistente elaborerà queste informazioni:
 \begin{itemize}
-    \item \textit{avviare $<Programma>$} è l'intento riconosciuto
+    \item \textit{avviare \lstinline{<lista di programmi>}} è l'intento riconosciuto
     \item \textit{Steam, Whatsapp, Chrome} sono le entità su cui agiremo
 \end{itemize}
 
-In questo caso, l'assistente ha capito che l'utente vuole avviare dei programmi e sa anche quali programmi dovrà avviare. 
+In questo caso, l'assistente ha capito che l'utente vuole avviare dei programmi e sa anche quali programmi dovrà avviare.
 Nel caso in cui mancassero delle informazioni, è possibile specificare quali scenari e quali risposte dovrà fornire l'assistente, come per esempio, richiedere quali programmi gestire se l'utente non li avesse specificati.
