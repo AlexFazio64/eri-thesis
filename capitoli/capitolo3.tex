@@ -1,0 +1,86 @@
+\chapter{Contributo principale}
+
+Obiettivo principale di questo progetto è, come detto in precedenza, permettere il controllo remoto di un dispositivo Windows attraverso l'interazione con Google Assistant.
+L'utente avrà inoltre la possibilità di specificare quali programmi sarà possibile invocare ed eventualmente di specificare delle routine personalizzate attraverso la scrittura di script python.
+
+In questa sezione verranno descritte le funzioni principali e le loro implementazioni tramite frammenti di codice e grafici.
+
+\section{Panoramica e struttura dell'applicazione}
+L'applicazione è divisa in tre sezioni principali le quali verranno trattate separatamente.
+
+Le sezioni sono:
+\begin{itemize}
+    \item Front-end
+    \item Assistente
+    \item Back-end
+\end{itemize}
+
+\section{Front-end}
+La parte front-end include l'interfaccia grafica realizzata in SvelteKit e l'applicativo Electron che la incapsula.
+Gran parte del lavoro è stato quello di creare un sito web funzionante che permetta all'utente di effettuare il login con Google, e successivamente di collegare il tutto con Firebase e il realtime database.
+
+SCREENSHOT ERI CLIENT
+
+\subsection{Schermata di accesso}
+\label{subs:profilo}
+Il login è una parte principale della applicazione poichè è necessario che l'utente possa controllare solamente i propri dispositivi. Per fare ciò si è scelto di utilizzare firebase e il suo servizio di autenticazione. Dato che la registrazione a dall'utente può essere effettuata completamente a voce, si è scelto di utilizzare il tipo di accesso tramite OAuth.
+OAuth è un tipo di flusso di autenticazione diverso da quello standard che richiede username e password. OAuth introduce dei concetti diversi per garantire la sicurezza. In primo luogo abbiamo i provider di sicurezza che immagazzinano tutte le informazioni confidenziali dell'utente, abbiamo poi le applicazioni di terze parti che richiedono l'accesso ad un profilo, e infine abbiamo i token di sicurezza, garantiti solo in caso di accesso corretto.
+Quando un utente vuole effettuare l'accesso tramite una applicazione, esso viene reindirizzato ad una pagina di login sul server del provider di sicurezza. Questa pagina verrà generata on-demand e ad accesso effettuato, verrà reindirizzato sulla pagina al quale voleva accedere, con tutte le informazioni necessarie fornite dal provider. Tutto questo processo avviene secondo protocolli di comunicazione protetti minimizzando così il rischio di attacco.
+
+GRAFICO OAUTH2 FLOW
+
+SCREEN POPUP GOOGLE ERI
+
+\subsection{Dashboard utente}
+La pagina dell'utente permette di gestire la lista di programmi avviabili e di collegare il dispositivo a firebase in modo che possa ricevere comandi dall'assistente.
+Nella parte superiore abbiamo l'identificativo dell'utente e del dispositivo. Nel caso in cui l'uuid non sia sincronizzato con il database, apparirà un tasto che permetterà di sincronizzarli.
+L'applicazione rimane in ascolto dei cambiamenti del valore sul database e nel caso in cui non fossero uguali non eseguirà i comandi.
+
+SCREEN sync button
+
+Nella parte inferiore si trovano i componenti Svelte che permettono di specificare i programmmi da collegare all'applicazione.
+Per fare ciò si è necessitato di una funzionalità fornita da Electron, ovvero un wrapper per la classe File di Javascript che permette di accedere al percorso completo del file.
+Normalmente tale percorso è offuscato dai browser per motivi di sicurezza.
+Per collegare un programma è necessario effettuare il trascinamento del programma sull'apposita icona.
+L'icona ascolta l'evento \textit{drop} e tramite la funzione \textit{nome funzione} l'applicazione sarà in grado di estrarre il percorso dell'eseguibile indicato.
+
+SCREEN ICONA + tooltip
+
+Per rendere più affidabile tale funzione, è possibile trascinare anche i collegamenti all'eseguibile, questo poichè è più facile che l'eseguibile effettivo sia sempre in una posizione precisa, mentre è possibile che i collegamenti vengano spostati.
+Nel caso in cui si trascinasse un collegamento, la funzione riesce ad estrarre il percorso del programma a cui punta il collegamento attraverso una serie di comandi disponibili nel cmd di Windows.
+Oltre al percorso del programma, è necessario anche il nome effettivo del processo che viene avviato, solitamente uguale al nome dell'eseguibile, poichè la funzionalità di arresto dei programmi necessita del nome esatto del processo da stoppare.
+
+SCREEN snippet codice
+
+In fondo alla schermata si trova un bottone di salvataggio che permette di rendere persistente la mappa dei programmi cosicché l'utente non debba indicare ogni volta i percorsi dei programmi.
+Quando il bottone viene cliccato, verrà scritto un file .json contenente tutti i percorsi indicati.
+Ad ogni accesso dell'utente, tale file verrà letto, ripristinando tutti i percorsi precedentemente specificati.
+
+SCREEN save button + screen file.json
+
+\subsection{Funzioni di Firebase nel client}
+\subsubsection{Struttura del rtdb}
+\subsubsection{Lettura dei dati da Firebase}
+
+\subsection{Funzionalità principali}
+\subsubsection{Avvio di programmi}
+\subsubsection{Chiusura di programmi}
+\subsubsection{Controllo dei media}
+\subsubsection{Routine personali}
+\subsubsection{Problema tecnico}
+
+\section{Assistente}
+\subsection{Agenti}
+\subsection{Struttura di una conversazione}
+introduzione concetti necessari
+\subsubsection{Autenticazione}
+\subsubsection{Flusso standard}
+collegamento al webhook da introdurre subito dopo
+
+\section{Back-end}
+\subsection{Webhook}
+\subsection{Firebase}
+\subsubsection{Firebase Auth}
+\subsubsection{Realtime Database}
+
+BIG GRAFICO ENORME OMMNICOMPRENSIVO DI TUTTO IN THE WORLD FOREVER
