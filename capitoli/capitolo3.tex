@@ -59,15 +59,51 @@ Ad ogni accesso dell'utente, tale file verrà letto, ripristinando tutti i perco
 SCREEN save button + screen file.json
 
 \subsection{Funzioni di Firebase nel client}
+Come già accennato, firebase fornisce librerie Javascript che permettono di integrare i servizi all'interno delle applicazioni. 
+Di tutte le funzioni offerte, nel progetto vengono utilizzate quelle relative all'autenticazione e alcune riguardanti il realtime database.
+La funzione onAuthStateChanged permette di ascoltare i cambiamenti alla variabile relativa all'utente autenticato. 
+Permette di gestire cambiamenti riguardanti lo stato di login dell'utente.
+Se l'utente è autenticato, all'interno dell'applicazione verranno aggiornate alcune informazioni estraendole dall'utente corrente e l'interfaccia mostrerà la dashboard dell'utente precedentemente descritta. 
+In caso contrario, l'utente si trova già nella dashboard ma ha effettuato il logout, quindi l'utente non sarà più autenticato e verrà reindirizzato alla pagina di login.
+
+Nella dashboard vengono utilizzate le funzioni relative al signout e alla lettura dei dati dal database. 
+Il signout è gestito da firebase, e quando avviene, le variabili precedentemente aggiornate vengono ripristinate ad undefined in modo da non avere alcuno stato condiviso tra le sessioni di accesso. 
+Per quanto riguarda la lettura dei dati, al login, verrà letto l'uuid dell'ultimo dispositivo attivo dal database remotamente e da un file .txt in locale. 
+Nel caso in cui tali uuid siano uguali, allora il dispositivo potrà riceve comandi e risulterà online, in caso contrario, l'utente potrà scegliere se sincronizzare l'uuid locale sul database, attivando il dispositivo attuale.
+
 \subsubsection{Struttura del rtdb}
+Il realtime database ha una struttura ad albero, ovvero, ogni nodo può a sua volta contenere altri nodi al suo interno. 
+Questo porta a delle scelte da fare nella modellazione dei dati poichè la lettura di un nodo padre porta alla lettura di tutto il nodo, e quindi anche di tutti i suoi nodi figlio. 
+Si è scelto di dare la seguente struttura al database per minimizzare la quantità di dati da leggere: 
+
+SCREEN RTDB
+
 \subsubsection{Lettura dei dati da Firebase}
+Quando l'assistente scrive un comando nel database, esso verrà scritto nel nodo appartenente all'utente che ha invocato l'assistente. 
+Verrà creato così un nuovo nodo figlio chiamato comm (command) con all'interno i dettagli del comando. 
+Attraverso la funzione onValue di firebase è possibile ascoltare in tempo reale i cambiamenti su un nodo. Quando un nodo viene cambiato in qualsiasi modo, firebase notificherà la funzione onValue che ascolta un certo nodo e l'applicazione sarà in grado di interpretare il tipo di comando appena scritto. 
+Quando il comando viene finalmente eseguito dall'applicazione, la funzione set di firebase si occuperà di cancellare il comando dal database così da evitare l'esecuzione di comandi già eseguiti. 
+L'utilizzo del database permette inoltre di inviare comandi anche quando il dispositivo non è online e di eseguire i comandi al successivo collegamento del dispositivo.
 
 \subsection{Funzionalità principali}
-\subsubsection{Avvio di programmi}
-\subsubsection{Chiusura di programmi}
-\subsubsection{Controllo dei media}
-\subsubsection{Routine personali}
-\subsubsection{Problema tecnico}
+Il codice relativo all'esecuzione dei comandi si trova centralizzato nel componente svelte \lstinline{<ProgramList>}. 
+
+SCREEN component ProgramList
+
+Il flusso standard è comune per tutti i tipi di comando:
+
+\begin{itemize}
+    \item la funzione onValue che ascolta il nodo comm dell'utente attuale riceve una notifica di cambiamento
+    \item se un comando è stato creato, allora snap.data() conterrà le informazioni riguardanti il comando divise in action e params
+    \item attraverso action è possibile identificare il tipo di comando da eseguire, e tramite uno switch verrà invocata la funzione corrispondente
+    \item invocando la funzione corretta, sarà possibile eseguire il comando preciso utilizzando params, che conterrà informazioni diverse dipendentemente dal tipo di comando
+    \item dopo l'esecuzione, il comando verrà eliminato dal database come già accennato in precedenza
+\end{itemize}    
+
+SCREEN funzione Avvio di programmi
+SCREEN funzione Chiusura di programmi
+SCREEN funzione Controllo dei media
+SCREEN funzione Routine personali
 
 \section{Assistente}
 \subsection{Agenti}

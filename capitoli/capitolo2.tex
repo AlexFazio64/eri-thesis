@@ -71,7 +71,8 @@ Questo lavoro di tesi utilizza il piano gratuito offerto da Firebase poichè non
 
 \subsection{Realtime Database}
 Il Realtime Database offerto da Firebase è un database JSON (JavaScript Object Notation) ottimizzato in modo tale da avere un bassissima latenza.
-E' stato scelto tale database poichè i dati necessari al funzionamento della applicazione sono rappresentabili facilmente come JSON, e la bassa latenza aiuta con la reattività dell'assistente virtuale data la sua natura conversazionale.
+E' stato scelto tale database poichè i dati necessari al funzionamento della applicazione sono rappresentabili facilmente in formato JSON, e la bassa latenza aiuta con la reattività dell'assistente virtuale data la sua natura conversazionale. 
+La bassa latenza è possibile grazie al fatto che i dati sincronizzati vengono duplicati nel dispositivo locale, e in caso di cambiamenti, vengono sincronizzati solamente i cambiamenti senza il bisogno di dover inviare nuovamente i dati aggiornati.
 
 \section{SvelteKit}
 SvelteKit è un compilatore, evoluzione di Svelte, in grado di generare applicazioni web collegando la logica alla grafica attraverso una sintassi simile ad HTML e Javascript.
