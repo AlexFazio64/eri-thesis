@@ -114,9 +114,33 @@ introduzione concetti necessari
 collegamento al webhook da introdurre subito dopo
 
 \section{Back-end}
+La parte back-end è realizzata principalmente utilizzando servizi di Firebase, e data la l'impossibilità di utilizzo del servizio di Cloud Functions, è stato implementato un webhook hostato su Heroku.
+
 \subsection{Webhook}
+Il webhook utilizza il framework Express per rispondere alle richieste dell'assistente virtuale utilizzando la libreria di Actions on Google. 
+Quando l'assistente contatta il webhook, viene inviato uno snapshot della conversazione insieme alla request, e tramite la libreria di Actions on Google è possibile estrarre facilmente le informazioni ed eventualmente continuare la conversazione. 
+Il webhook viene utilizzato principalmente per aggiornare il database dopo che un utente si iscrive, e quando l'utente invoca i comandi. 
+Tali comandi vengono scritti dal webhook sul database tramite delle credenziali di amministratore salvate sulla dyno hostata su Heroku. 
+All'avvio del server, verrà effettuato l'accesso a firebase con le credenziali admin, e impostate le rotte sul quale è possibile fare richieste dall'esterno. 
+
+SCREEN configurazione firebase webhook
+
+Quando l'assistente contatterà la rotta $/$ tramite il metodo post, la corrispondente request verrà analizzata dalla libreria di Action on Google chiamando una routine personalizzata. 
+Tale routine estrae dalla conversazione il token univoco dell'utente necessario a scrivere il comando nel nodo giusto del database, ed estrae inoltre anche anche i parametri action e params necessari ad identificare il comando.
+
+SCREEN routine comando
+
 \subsection{Firebase}
 \subsubsection{Firebase Auth}
+Per quanto riguarda l'autenticazione degli utenti, l'utente admin utilizza l'autenticazione tramite email e password, mentre per gli utenti standard viene utilizata l'autenticazione tramite token, proveniente dal provider OAuth, in questo caso Google.
+L'admin utilizza questa tipologia di autenticazione poichè è facilmente automatizzabile dal webhook. Per gli utenti standard invece, risulta più veloce fare login tramite Google, e dato che il token è memorizzabile in locale, basta accedere una sola volta per poter utilizzare il servizio. 
+Questo risulta molto conveniente e permettere al client desktop di effettuare l'accesso all'account all'avvio del programma senza necessità di input da parte dell'utente.
+
 \subsubsection{Realtime Database}
+La parte back-end del realtime database è principalmente formata dalle regole di accesso. 
+Esse permettono grande flessibilità per quanto riguarda la lettura e la scrittura da parte di utenti non amministratore. 
+'E possibile specificare diversi livelli di accesso alle funzioni del database, ma data la portata ristretta del progetto, le regole implementate in questo specifico caso sono molto semplici.
+
+SCREEN regole db
 
 BIG GRAFICO ENORME OMMNICOMPRENSIVO DI TUTTO IN THE WORLD FOREVER
