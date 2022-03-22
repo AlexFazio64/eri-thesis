@@ -23,9 +23,9 @@ SCREENSHOT ERI CLIENT
 
 \subsection{Schermata di accesso}
 \label{subs:profilo}
-Il login è una parte principale della applicazione poichè è necessario che l'utente possa controllare solamente i propri dispositivi. Per fare ciò si è scelto di utilizzare firebase e il suo servizio di autenticazione. Dato che la registrazione a dall'utente può essere effettuata completamente a voce, si è scelto di utilizzare il tipo di accesso tramite OAuth.
+Il login è una parte principale della applicazione poichè è necessario che l'utente possa controllare solamente i propri dispositivi. Per fare ciò si è scelto di utilizzare firebase e il suo servizio di autenticazione. Dato che la registrazione dell'utente può essere effettuata completamente a voce, si è scelto di utilizzare il tipo di accesso tramite OAuth.
 OAuth è un tipo di flusso di autenticazione diverso da quello standard che richiede username e password. OAuth introduce dei concetti diversi per garantire la sicurezza. In primo luogo abbiamo i provider di sicurezza che immagazzinano tutte le informazioni confidenziali dell'utente, abbiamo poi le applicazioni di terze parti che richiedono l'accesso ad un profilo, e infine abbiamo i token di sicurezza, garantiti solo in caso di accesso corretto.
-Quando un utente vuole effettuare l'accesso tramite una applicazione, esso viene reindirizzato ad una pagina di login sul server del provider di sicurezza. Questa pagina verrà generata on-demand e ad accesso effettuato, verrà reindirizzato sulla pagina al quale voleva accedere, con tutte le informazioni necessarie fornite dal provider. Tutto questo processo avviene secondo protocolli di comunicazione protetti minimizzando così il rischio di attacco.
+Quando un utente vuole effettuare l'accesso tramite una applicazione, esso viene reindirizzato ad una pagina di login sul server del provider di sicurezza. Questa pagina verrà generata on-demand e ad accesso effettuato, verrà reindirizzato sulla pagina alla quale l'utente voleva accedere, con tutte le informazioni necessarie fornite dal provider. Tutto questo processo avviene secondo protocolli di comunicazione protetti minimizzando così il rischio di attacco.
 
 GRAFICO OAUTH2 FLOW
 
@@ -38,8 +38,8 @@ L'applicazione rimane in ascolto dei cambiamenti del valore sul database e nel c
 
 SCREEN sync button
 
-Nella parte inferiore si trovano i componenti Svelte che permettono di specificare i programmmi da collegare all'applicazione.
-Per fare ciò si è necessitato di una funzionalità fornita da Electron, ovvero un wrapper per la classe File di Javascript che permette di accedere al percorso completo del file.
+Nella parte inferiore si trovano i componenti Svelte che permettono di specificare i programmi da collegare all'applicazione.
+Per fare ciò è stato necessario utilizzare una funzionalità fornita da Electron, ovvero un wrapper per la classe File di Javascript che permette di accedere al percorso completo del file.
 Normalmente tale percorso è offuscato dai browser per motivi di sicurezza.
 Per collegare un programma è necessario effettuare il trascinamento del programma sull'apposita icona.
 L'icona ascolta l'evento \textit{drop} e tramite la funzione \textit{nome funzione} l'applicazione sarà in grado di estrarre il percorso dell'eseguibile indicato.
@@ -63,15 +63,15 @@ Come già accennato, firebase fornisce librerie Javascript che permettono di int
 Di tutte le funzioni offerte, nel progetto vengono utilizzate quelle relative all'autenticazione e alcune riguardanti il realtime database.
 La funzione onAuthStateChanged permette di ascoltare i cambiamenti alla variabile relativa all'utente autenticato. 
 Permette di gestire cambiamenti riguardanti lo stato di login dell'utente.
-Se l'utente è autenticato, all'interno dell'applicazione verranno aggiornate alcune informazioni estraendole dall'utente corrente e l'interfaccia mostrerà la dashboard dell'utente precedentemente descritta. 
+Se l'utente è autenticato, all'interno dell'applicazione verranno aggiornate alcune informazioni estraendole dall'utente corrente e l'interfaccia mostrerà la dashboard dell'utente, precedentemente descritta. 
 In caso contrario, l'utente si trova già nella dashboard ma ha effettuato il logout, quindi l'utente non sarà più autenticato e verrà reindirizzato alla pagina di login.
 
 Nella dashboard vengono utilizzate le funzioni relative al signout e alla lettura dei dati dal database. 
 Il signout è gestito da firebase, e quando avviene, le variabili precedentemente aggiornate vengono ripristinate ad undefined in modo da non avere alcuno stato condiviso tra le sessioni di accesso. 
-Per quanto riguarda la lettura dei dati, al login, verrà letto l'uuid dell'ultimo dispositivo attivo dal database remotamente e da un file .txt in locale. 
+Per quanto riguarda la lettura dei dati, al login, verrà letto l'uuid dell'ultimo dispositivo attivo dal database, e contemporaneamente da un file .txt locale. 
 Nel caso in cui tali uuid siano uguali, allora il dispositivo potrà riceve comandi e risulterà online, in caso contrario, l'utente potrà scegliere se sincronizzare l'uuid locale sul database, attivando il dispositivo attuale.
 
-\subsubsection{Struttura del rtdb}
+\subsubsection{Struttura del Realtime Database}
 Il realtime database ha una struttura ad albero, ovvero, ogni nodo può a sua volta contenere altri nodi al suo interno. 
 Questo porta a delle scelte da fare nella modellazione dei dati poichè la lettura di un nodo padre porta alla lettura di tutto il nodo, e quindi anche di tutti i suoi nodi figlio. 
 Si è scelto di dare la seguente struttura al database per minimizzare la quantità di dati da leggere: 
@@ -86,7 +86,7 @@ Quando il comando viene finalmente eseguito dall'applicazione, la funzione set d
 L'utilizzo del database permette inoltre di inviare comandi anche quando il dispositivo non è online e di eseguire i comandi al successivo collegamento del dispositivo.
 
 \subsection{Funzionalità principali}
-Il codice relativo all'esecuzione dei comandi si trova centralizzato nel componente svelte \lstinline{<ProgramList>}. 
+Il codice relativo all'esecuzione dei comandi è centralizzato nel componente svelte \lstinline{<ProgramList>}. 
 
 SCREEN component ProgramList
 
@@ -106,12 +106,48 @@ SCREEN funzione Controllo dei media
 SCREEN funzione Routine personali
 
 \section{Assistente}
-\subsection{Agenti}
-\subsection{Struttura di una conversazione}
-introduzione concetti necessari
-\subsubsection{Autenticazione}
-\subsubsection{Flusso standard}
-collegamento al webhook da introdurre subito dopo
+E' possibile vedere l'assistente come una estensione delle funzionalità di Google Assistant. 
+Le funzionalità di riconoscimento e comprensione del testo sono native di Google Assistant, mentre il comportamento è stato implementato utilizzando gli strumenti offerti da Actions on Google.
+Per capire meglio come è stato realizzato l'assistente è necessario introdurre alcuni concetti chiave, ovvero:
+\begin{itemize}
+    \item Agente
+    \item Conversazione, che comprende a sua volta i concetti di:
+    \begin{itemize}
+        \item Intento
+        \item Tipi
+        \item Slot-filling  
+    \end{itemize}
+\end{itemize}
+
+\subsection{Concetti}
+\subsubsection{Agente}
+Un Agente è un assistente virtuale che gestisce conversazioni con gli utenti in maniera concorrente, utilizzando moduli di NLU per comprendere le particolarità del linguaggio umano.
+E' necessario creare un agente personalizzato per gestire i tipi di conversazione adatti alla applicazione che si vuole realizzare.
+E' possibile assimilare un Agente di Google Assistant ad un agente di un call center, entrambi vengono istruiti per un tipo specifico di conversazione ma senza essere troppo specifici.
+
+\subsubsection{Conversazione}
+Una conversazione definisce il modo in cui l'utente può interagire con l'agente. E' composta da:
+\begin{itemize}
+    \item Scena, ovvero lo stato attuale della conversazione. E' possibile cambiare scena, avanzando così nella conversazione. Un esempio può essere la scena di benvenuto quando l'utente invoca l'agente, dalla quale è possibile transizionare in un'altra scena dipendentemente dall'input dell'utente.
+    \item Intento, che è la rappresentazione della volontà dell'utente. L'agente reagisce agli intenti per cambiare scena.
+    \item Tipi, che permettono di parametrizzare l'input dell'utente. Il concetto di slot-filling è collegato ai tipi.
+    \item Slot-filling, ovvero una condizione che permette alla scena di reagire a diverse informazioni. 
+    Uno slot può essere opzionale o necessario. Un esempio può essere l'utente che chiede che tempo fa. 
+    Uno slot può essere il luogo da controllare. Se per esempio lo slot è necessario, l'agente può fare altre domande all'utente per cercare di estrarre il luogo da controllare.
+\end{itemize}
+
+\subsection{Autenticazione}
+L'agente permette di distinguere tra utenti autenticati e non. Questo è utile perchè un utente non iscritto non può inviare i comandi ad un dispositivo che non esiste. 
+Per fare ciò, Actions on Google mette a disposizione delle variabili interne, e tramite una scena preliminare è possibile accedere a tali variabili, spostando la conversazione nel flusso necessario. 
+
+Se l'utente non è autenticato, la scena impostata sarà quella Guest. Tale scena fornisce la possibilità di riceve informazioni sulle capacità dell'agente e la possibilità di far iscrivere l'utente tramite una routine standard di Google.
+Se l'utente è autenticato, l'agente chiederà all'utente di impartire un comando. 
+Tramite slot-filling e intent handling l'agente potrà contattare il webhook per poter scrivere il comando sul database, e successivamente, ricevendo la risposta dal webhook, l'agente darà conferma all'utente dell'azione compiuta.
+
+\subsection{Flusso standard}
+Vediamo un esempio di conversazione standard:
+
+SCREEN conversation flow
 
 \section{Back-end}
 La parte back-end è realizzata principalmente utilizzando servizi di Firebase, e data la l'impossibilità di utilizzo del servizio di Cloud Functions, è stato implementato un webhook hostato su Heroku.
@@ -139,8 +175,11 @@ Questo risulta molto conveniente e permettere al client desktop di effettuare l'
 \subsubsection{Realtime Database}
 La parte back-end del realtime database è principalmente formata dalle regole di accesso. 
 Esse permettono grande flessibilità per quanto riguarda la lettura e la scrittura da parte di utenti non amministratore. 
-'E possibile specificare diversi livelli di accesso alle funzioni del database, ma data la portata ristretta del progetto, le regole implementate in questo specifico caso sono molto semplici.
+E' possibile specificare diversi livelli di accesso alle funzioni del database, ma data la portata ristretta del progetto, le regole implementate in questo specifico caso sono molto semplici.
 
 SCREEN regole db
+
+
+Questo è un esempio grafico di una possibile conversazione tra un utente e l'assistente:
 
 BIG GRAFICO ENORME OMMNICOMPRENSIVO DI TUTTO IN THE WORLD FOREVER
