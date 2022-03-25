@@ -1,15 +1,15 @@
 \chapter{Discussione}
 
-Questa sezione discute le funzionalità già descritte precedentemente, con l’obiettivo di illustrare i problemi che persistono nella loro attuale implementazione.
+Questa sezione discute alcune funzionalità già descritte precedentemente, con l’obiettivo di illustrare i problemi che persistono nella loro attuale implementazione.
 Verranno inoltre esposte alcune possibili soluzioni a questi problemi, unitamente a dei possibili miglioramenti apportabili in futuro.
 
 \section{Problemi}
 \subsection{Requisiti per l'utilizzo}
 Il problema più evidente nel progetto è che non è una soluzione all-in-one poichè necessita che il sistema abbia Node e Python già installati e visibili nelle variabili di sistema.
-Node è necessario a causa del fatto che SvelteKit non permette di compilare in una unica soluzione il sito sviluppato. Il sito sviluppato necessita di un cosiddetto adapter che fornirà da server. 
+Node è necessario a causa del fatto che SvelteKit non permette di compilare in una unica soluzione il sito sviluppato. Il sito sviluppato necessita di un cosiddetto adapter che fungerà da server. 
 Python è invece necessario poichè le funzionalità che interagiscono con la libreria win32 utilizzata è implementata in python e tramite Electron viene invocato uno script python per interagire con tale API. 
 Oltre a Python però, è necessaria l'installazione di tale api dato che non viene resa disponibile con la sola installazione dell'interprete python. 
-Questo pone ovviamente un carico di lavoro eccessivo all'utente dato che c'è bisogno che il sistema sia ben configurato affinchè l'applicazione possa funzionare.
+Questo pone ovviamente un carico di lavoro eccessivo all'utente dato si necessita che il sistema sia ben configurato affinchè l'applicazione possa funzionare.
 
 \subsection{User Experience}
 Come già accennato, l'utente è il responsabile della configurazione corretta del software, processo che potrebbe essere automatizzato. 
@@ -18,13 +18,13 @@ Questo fornisce una maggiore flessibilità nella scelta, ma va in contrasto con 
 
 \subsection{Ambiguità nell'invocazione dei programmi}
 A causa della grande mole di software diversi è stato necessario selezionare alcune delle categorie più comuni tra i programmi più popolari. 
-Non è possibile chiedere all'assistente di avviare un programma specifico non presente nel dizionario preconfigurato su Actions on Google. 
+Non è possibile chiedere all'assistente di avviare un programma specifico non presente nel dizionario configurato su Actions on Google. 
 Un esempio di questo problema è una frase del genere:
 
 \textit{Start IntelliJ IDEA}
 
-L'assistente capisce che deve avviare un programma, ma essendo IntelliJ IDEA non presente nei \textit{types} dell'assistente nè come categoria, nè come alias, non è possibile estrapolare la categoria di software da avviare. 
-\'E possibile però assegnare IntelliJ IDEA nel client ad una categoria diversa (ad esempio mappare IntelliJ alla categoria \textit{music}) oppure creare una routine personalizzata in python. 
+L'assistente capisce che deve avviare un programma, ma dato che IntelliJ IDEA non presente nei \textit{types} dell'assistente nè come categoria, nè come alias, non è possibile estrapolare la categoria di software da avviare. 
+\'E possibile però assegnare IntelliJ IDEA ad una categoria diversa nel client (ad esempio mappare IntelliJ alla categoria \textit{music}) oppure creare una routine personalizzata in python. 
 Entrambe le soluzioni non sono molto intuitive in quanto la prima prevede di avviare un programma utilizzando un altro nome, e la seconda prevede di invocare un programma assegnando un numero al nome dello script che lo invoca.
 \'E stato scelto di lasciare però tali possibilità agli utenti che ne potrebbero beneficiare.
 
@@ -32,6 +32,7 @@ Entrambe le soluzioni non sono molto intuitive in quanto la prima prevede di avv
 Il maggiore dei problemi è purtroppo l'effettiva pubblicazione dell'agente al pubblico. 
 Attualmente l'agente è disponibile solamente attraverso l'account dello sviluppatore, quindi è possibile provare l'effettivo funzionamento dell'applicazione accedendo con quel profilo. 
 Tutte le funzionalità sarebbero comunque disponibili a tutti gli utenti iscritti una volta pubblicato l'agente, ma al momento non è stato possibile rendere disponibile l'agente a tutti. 
+Si è scelto di non pubblicare l'agente al momento poichè bisognerebbe stilare una privacy policy e dei termini di servizio compatibili con quelli richiesti da Google, ed al momento questo è fuori dallo scope del lavoro di tesi.
 
 \section{Miglioramenti}
 \subsection{Client nativo}
