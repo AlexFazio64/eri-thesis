@@ -19,7 +19,12 @@ Le sezioni sono:
 La parte front-end include l'interfaccia grafica realizzata in SvelteKit e l'applicativo Electron che la incapsula.
 Gran parte del lavoro è stato quello di creare un sito web funzionante che permetta all'utente di effettuare il login con Google, e successivamente di collegare il tutto con Firebase e il realtime database.
 
-SCREENSHOT ERI CLIENT
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{images/eri_client.png}
+    \caption{Interfaccia client desktop}
+    \label{fig:Interfaccia Client}
+\end{figure}
 
 \subsection{Schermata di accesso}
 \label{subs:profilo}
@@ -27,36 +32,73 @@ Il login è una parte principale della applicazione poichè è necessario che l'
 OAuth è un tipo di flusso di autenticazione diverso da quello standard che richiede username e password. OAuth introduce dei concetti diversi per garantire la sicurezza. In primo luogo abbiamo i provider di sicurezza che immagazzinano tutte le informazioni confidenziali dell'utente, abbiamo poi le applicazioni di terze parti che richiedono l'accesso ad un profilo, e infine abbiamo i token di sicurezza, garantiti solo in caso di accesso corretto.
 Quando un utente vuole effettuare l'accesso tramite una applicazione, esso viene reindirizzato ad una pagina di login sul server del provider di sicurezza. Questa pagina verrà generata on-demand e ad accesso effettuato, verrà reindirizzato sulla pagina alla quale l'utente voleva accedere, con tutte le informazioni necessarie fornite dal provider. Tutto questo processo avviene secondo protocolli di comunicazione protetti minimizzando così il rischio di attacco.
 
-GRAFICO OAUTH2 FLOW
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.45]{images/oauth2.png}
+    \caption{Flusso autenticazione OAuth2}
+    \label{fig:OAuth2}
+\end{figure}
 
-SCREEN POPUP GOOGLE ERI
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.45]{images/oauth_redirect.jpg}
+    \caption{Pagina provider di sicurezza OAuth2}
+    \label{fig:OAuth2 provider page}
+\end{figure}
 
 \subsection{Dashboard utente}
 La pagina dell'utente permette di gestire la lista di programmi avviabili e di collegare il dispositivo a firebase in modo che possa ricevere comandi dall'assistente.
 Nella parte superiore abbiamo l'identificativo dell'utente e del dispositivo. Nel caso in cui l'uuid non sia sincronizzato con il database, apparirà un tasto che permetterà di sincronizzarli.
 L'applicazione rimane in ascolto dei cambiamenti del valore sul database e nel caso in cui non fossero uguali non eseguirà i comandi.
 
-SCREEN sync button
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/sync_btn.jpg}
+    \caption{Tasto sincronizzazione dispositivo}
+    \label{fig:Tasto sincronizzazione}
+\end{figure}
 
 Nella parte inferiore si trovano i componenti Svelte che permettono di specificare i programmi da collegare all'applicazione.
 Per fare ciò è stato necessario utilizzare una funzionalità fornita da Electron, ovvero un wrapper per la classe File di Javascript che permette di accedere al percorso completo del file.
 Normalmente tale percorso è offuscato dai browser per motivi di sicurezza.
 Per collegare un programma è necessario effettuare il trascinamento del programma sull'apposita icona.
-L'icona ascolta l'evento \textit{drop} e tramite la funzione \textit{nome funzione} l'applicazione sarà in grado di estrarre il percorso dell'eseguibile indicato.
+L'icona ascolta l'evento \textit{drop} e tramite la funzione anonima, l'applicazione sarà in grado di estrarre il percorso dell'eseguibile indicato.
 
-SCREEN ICONA + tooltip
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{images/drop_target.png}
+    \caption{Componente Svelte $<Program>$}
+    \label{fig:Componente Svelte Program}
+\end{figure}
 
 Per rendere più affidabile tale funzione, è possibile trascinare anche i collegamenti all'eseguibile, questo poichè è più facile che l'eseguibile effettivo sia sempre in una posizione precisa, mentre è possibile che i collegamenti vengano spostati.
 Nel caso in cui si trascinasse un collegamento, la funzione riesce ad estrarre il percorso del programma a cui punta il collegamento attraverso una serie di comandi disponibili nel cmd di Windows.
 Oltre al percorso del programma, è necessario anche il nome effettivo del processo che viene avviato, solitamente uguale al nome dell'eseguibile, poichè la funzionalità di arresto dei programmi necessita del nome esatto del processo da stoppare.
 
-SCREEN snippet codice
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{images/exe_path_extraction.jpg}
+    \caption{Funzione estrazione percorso}
+    \label{fig:onDrop listener}
+\end{figure}
 
 In fondo alla schermata si trova un bottone di salvataggio che permette di rendere persistente la mappa dei programmi cosicché l'utente non debba indicare ogni volta i percorsi dei programmi.
 Quando il bottone viene cliccato, verrà scritto un file .json contenente tutti i percorsi indicati.
 Ad ogni accesso dell'utente, tale file verrà letto, ripristinando tutti i percorsi precedentemente specificati.
 
-SCREEN save button + screen file.json
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{images/json_programs.jpg}
+    \caption{File json percorsi}
+    \label{fig:File JSON di configurazione}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1]{images/save_btn.jpg}
+    \caption{Bottone salvataggio configurazione}
+    \label{fig:Bottone di Salvataggio}
+\end{figure}
 
 \subsection{Funzioni di Firebase nel client}
 Come già accennato, firebase fornisce librerie Javascript che permettono di integrare i servizi all'interno delle applicazioni. 
@@ -76,7 +118,12 @@ Il realtime database ha una struttura ad albero, ovvero, ogni nodo può a sua vo
 Questo porta a delle scelte da fare nella modellazione dei dati poichè la lettura di un nodo padre porta alla lettura di tutto il nodo, e quindi anche di tutti i suoi nodi figlio. 
 Si è scelto di dare la seguente struttura al database per minimizzare la quantità di dati da leggere: 
 
-SCREEN RTDB
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/rtdb_snap.jpg}
+    \caption{Struttura Realtime Database}
+    \label{fig:Struttura rtdb}
+\end{figure}
 
 \subsubsection{Lettura dei dati da Firebase}
 Quando l'assistente scrive un comando nel database, esso verrà scritto nel nodo appartenente all'utente che ha invocato l'assistente. 
@@ -88,7 +135,12 @@ L'utilizzo del database permette inoltre di inviare comandi anche quando il disp
 \subsection{Funzionalità principali}
 Il codice relativo all'esecuzione dei comandi è centralizzato nel componente svelte \lstinline{<ProgramList>}. 
 
-SCREEN component ProgramList
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/onValue_comm.jpg}
+    \caption{Funzione onValue per la selezione del comando}
+    \label{fig:Listener realtime}
+\end{figure}
 
 Il flusso standard è comune per tutti i tipi di comando:
 
@@ -100,10 +152,19 @@ Il flusso standard è comune per tutti i tipi di comando:
     \item dopo l'esecuzione, il comando verrà eliminato dal database come già accennato in precedenza
 \end{itemize}    
 
-SCREEN funzione Avvio di programmi
-SCREEN funzione Chiusura di programmi
-SCREEN funzione Controllo dei media
-SCREEN funzione Routine personali
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.45]{images/run_program.jpg}
+    \caption{Funzione avvio programmi}
+    \label{fig:Run Program Command}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/run_py_scripts.jpg}
+    \caption{Funzioni controllo del volume e routine personali}
+    \label{fig:Run Python Scripts}
+\end{figure}
 
 \section{Assistente}
 E' possibile vedere l'assistente come una estensione delle funzionalità di Google Assistant. 
@@ -147,7 +208,12 @@ Tramite slot-filling e intent handling l'agente potrà contattare il webhook per
 \subsection{Flusso standard}
 Vediamo un esempio di conversazione standard:
 
-SCREEN conversation flow
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/conversation_flow.png}
+    \caption{Flusso standard}
+    \label{fig:Flusso Standard}
+\end{figure}
 
 \section{Back-end}
 La parte back-end è realizzata principalmente utilizzando servizi di Firebase, e data la l'impossibilità di utilizzo del servizio di Cloud Functions, è stato implementato un webhook hostato su Heroku.
@@ -159,12 +225,22 @@ Il webhook viene utilizzato principalmente per aggiornare il database dopo che u
 Tali comandi vengono scritti dal webhook sul database tramite delle credenziali di amministratore salvate sulla dyno hostata su Heroku. 
 All'avvio del server, verrà effettuato l'accesso a firebase con le credenziali admin, e impostate le rotte sul quale è possibile fare richieste dall'esterno. 
 
-SCREEN configurazione firebase webhook
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.45]{images/webhook_config.jpg}
+    \caption{Configurazione webhook per firebase}
+    \label{fig:Collegamento del webhook a firebase}
+\end{figure}
 
 Quando l'assistente contatterà la rotta $/$ tramite il metodo post, la corrispondente request verrà analizzata dalla libreria di Action on Google chiamando una routine personalizzata. 
 Tale routine estrae dalla conversazione il token univoco dell'utente necessario a scrivere il comando nel nodo giusto del database, ed estrae inoltre anche anche i parametri action e params necessari ad identificare il comando.
 
-SCREEN routine comando
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/webhook_routine.jpg}
+    \caption{Routine di gestione avvio dei programmi}
+    \label{fig:Webhook routine programmi}
+\end{figure}
 
 \subsection{Firebase}
 \subsubsection{Firebase Auth}
@@ -177,9 +253,9 @@ La parte back-end del realtime database è principalmente formata dalle regole d
 Esse permettono grande flessibilità per quanto riguarda la lettura e la scrittura da parte di utenti non amministratore. 
 E' possibile specificare diversi livelli di accesso alle funzioni del database, ma data la portata ristretta del progetto, le regole implementate in questo specifico caso sono molto semplici.
 
-SCREEN regole db
-
-
-Questo è un esempio grafico di una possibile conversazione tra un utente e l'assistente:
-
-BIG GRAFICO ENORME OMMNICOMPRENSIVO DI TUTTO IN THE WORLD FOREVER
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.38]{images/rtdb_rules.jpg}
+    \caption{Regole di gestiscono dell'accesso al database}
+    \label{fig:Regole del realtime database}
+\end{figure}
